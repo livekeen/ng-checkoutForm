@@ -1,0 +1,74 @@
+// ---------------------------------
+// :: Forms
+// ---------------------------------
+
+form
+  font-size: 0.95rem
+
+  em
+    display: block
+    font-size: 0.75rem
+    margin: 0.5em auto
+
+fieldset
+  border: 0
+  margin: 1rem 0
+  padding: 1rem 0
+
+.field
+  margin: 1rem auto
+  position: relative
+
+  .forgot-password // this is for forgot password link
+    position: absolute
+    top: 0
+    right: 0
+
+input, label, select
+  display: block
+
+label
+  font-weight: $bold
+  margin-bottom: 0.5em
+
+// Inputs
+input
+  &[type="email"], &[type="number"], &[type="password"], &[type="search"], &[type="tel"], &[type="text"], &[type="url"], &[type="color"], &[type="date"], &[type="datetime"], &[type="datetime-local"], &[type="month"], &[type="time"], &[type="week"]
+    border: 1px solid #c4c4c4
+    border-radius: 0.1875rem
+    display: block
+    padding: 0.875rem 1rem
+    width: 100%
+
+    &:focus
+      border-color: $blue
+      outline: none
+
+  // Checkbox
+  &[type="checkbox"], &[type="checkbox"]+label
+    display: inline-block
+
+select
+  @extend input[type="text"]
+  -webkit-appearance: none
+  background: white url(dropdown.png) no-repeat 97.5% center
+  background-size: 0.5em
+
+textarea
+  @extend input[type="text"]
+
+// Validation
+// Powered by Angular's built-in class designations
+
+small.error
+  color: $red
+  display: none
+
+input.ng-invalid.ng-touched
+  border-color: $red
+
+  &+small.error
+    display: block
+
+input.ng-valid.ng-touched
+  border-color: $green
