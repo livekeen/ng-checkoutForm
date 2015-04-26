@@ -27,12 +27,12 @@ var
 // :: Variables
 // ---------------------------------
 
-var basepaths = {
-  app:          'app/',
-  dist:         '_dist/',
+var BASEPATHS = {
+  app:          './app/',
+  dist:         './_dist/',
 };
 
-var paths = {
+var PATHS = {
   pages:        'views/pages/**/*',
   styles:       'assets/styles/**/*',
   scripts:      'assets/scripts/**/*',
@@ -41,7 +41,7 @@ var paths = {
   extras:       ['assets/fonts/**/*', 'assets/favicons/**/*', 'assets/checkout/**/*'],
 };
 
-var tasks = {
+var TASKS = {
   pages:        'pages',
   styles:       'styles',
   scripts:      'scripts',
@@ -72,81 +72,79 @@ var AUTOPREFIXER_BROWSERS = [
 // ---------------------------------
 
 // Clean dist directory
-gulp.task('clean', del.bind(null, [basepaths.dist], {dot: true}));
+gulp.task('clean', del.bind(null, [BASEPATHS.dist], {dot: true}));
 
 // Pages
-gulp.task(tasks.pages, function() {
-  return gulp.src(basepaths.app + paths.pages)
+gulp.task(TASKS.pages, function() {
+  return gulp.src(BASEPATHS.app + PATHS.pages)
     .pipe(jade({pretty: true}))
-    .pipe(gulp.dest(basepaths.dist)) // exports .html
+    .pipe(gulp.dest(BASEPATHS.dist)); // exports .html
 });
 
 // Styles
-gulp.task(tasks.styles, function() {
-  return gulp.src(basepaths.app + paths.styles)
+gulp.task(TASKS.styles, function() {
+  return gulp.src(BASEPATHS.app + PATHS.styles)
     .pipe(sass({ style: 'expanded' }))
     .pipe(autoprefixer({browsers: AUTOPREFIXER_BROWSERS}))
-    .pipe(gulp.dest(basepaths.dist)) // exports *.css
+    .pipe(gulp.dest(BASEPATHS.dist)) // exports *.css
     .pipe(rename({suffix: '.min'}))
     .pipe(minifycss())
-    .pipe(gulp.dest(basepaths.dist)) // exports *.min.css
-    .pipe(reload({stream: true}))
-    .pipe(notify({ message: 'Styles task complete' }));
+    .pipe(gulp.dest(BASEPATHS.dist)) // exports *.min.css
+    .pipe(reload({stream: true}));
 });
 
 // Scripts
-gulp.task(tasks.scripts, function() {
-  return gulp.src(basepaths.app + paths.scripts)
+gulp.task(TASKS.scripts, function() {
+  return gulp.src(BASEPATHS.app + PATHS.scripts)
     .pipe(jshint())
     .pipe(jshint.reporter('default'))
+    .pipe(gulp.dest(BASEPATHS.dist)) // exports all javascript files
     .pipe(concat('functions.js'))
-    .pipe(gulp.dest(basepaths.dist)) // exports functions.js
+    .pipe(gulp.dest(BASEPATHS.dist)) // exports functions.js
     .pipe(rename({ suffix: '.min' }))
     .pipe(uglify())
-    .pipe(gulp.dest(basepaths.dist)) // exports functions.min.js
-    .pipe(notify({ message: 'Scripts task complete' }));
+    .pipe(gulp.dest(BASEPATHS.dist)); // exports functions.min.js
 });
 
 // Images
-gulp.task(tasks.images, function() {
-  return gulp.src(basepaths.app + paths.images)
+gulp.task(TASKS.images, function() {
+  return gulp.src(BASEPATHS.app + PATHS.images)
     .pipe(imagemin({ optimizationLevel: 3, progressive: true, interlaced: true }))
-    .pipe(gulp.dest(basepaths.dist))
-    .pipe(notify({ message: 'Images task complete' }));
+    .pipe(gulp.dest(BASEPATHS.dist));
 });
 
 // Fonts
-gulp.task(tasks.fonts, function () {
-  return gulp.src([basepaths.app + paths.fonts])
-    .pipe(gulp.dest(basepaths.dist));
+gulp.task(TASKS.fonts, function () {
+  return gulp.src([BASEPATHS.app + PATHS.fonts])
+    .pipe(gulp.dest(BASEPATHS.dist));
 });
 
 // Copy all files at the root level (app)
 gulp.task('copy', function () {
-  // return gulp.src([basepaths.app + '*'], {dot: true})
-  //   .pipe(gulp.dest(basepaths.dist));
+  // return gulp.src([BASEPATHS.app + '*'], {dot: true})
+  //   .pipe(gulp.dest(BASEPATHS.dist));
 });
 
 // Watch files for changes & reload
-gulp.task('serve', [tasks.styles], function () {
+gulp.task('serve', [TASKS.styles], function () {
   browserSync({
     notify: false,
     // Customize the BrowserSync console logging prefix
-    logPrefix: 'WSK',
-    // Run as an https by uncommenting 'https: true'
+    logPrefix: 'VNLA',
+    // Run as an https
     // Note: this uses an unsigned certificate which on first access
     //       will present a certificate warning in the browser.
-    // https: true,
-    server: ['.tmp', basepaths.dist]
+    https: true,
+    server: BASEPATHS.dist
   });
 
-  gulp.watch([basepaths.app + paths.pages], [tasks.pages, reload]);
-  gulp.watch([basepaths.app + paths.styles], [tasks.styles, reload]);
-  gulp.watch([basepaths.app + paths.scripts], [tasks.scripts]);
-  gulp.watch([basepaths.app + paths.images], reload);
+  gulp.watch([BASEPATHS.app + PATHS.pages], [TASKS.pages, reload]);
+  gulp.watch([BASEPATHS.app + PATHS.styles], [TASKS.styles, reload]);
+  gulp.watch([BASEPATHS.app + PATHS.scripts], [TASKS.scripts, reload]);
+  gulp.watch([BASEPATHS.app + PATHS.images], reload);
 });
 
 // Default task
 gulp.task('default', ['clean'], function (cb) {
-  runSequence(tasks.styles, [tasks.scripts, tasks.pages, tasks.images, tasks.fonts, 'copy'], cb);
+  runSequence(TASKS.styles, [TASKS.scripts, TASKS.pages, TASKS.images, TASKS.fonts, 'copy'], cb);
 });
