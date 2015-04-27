@@ -15,7 +15,7 @@
 
 (function() {
   // Create angular app
-  var app = angular.module('checkoutApp', []);
+  var app = angular.module('checkoutApp', ['angularPayments']);
 
   // Create controller
   app.controller("CheckoutController", function(){
@@ -38,3 +38,7 @@
     frequency: 'yearly'
   }];
 })();
+
+angular.module('checkoutApp').config(function($window) {
+    $window.Stripe.setPublishableKey('pk_test_jzHurXHqR8OD25e2kfHvpETD');
+});
