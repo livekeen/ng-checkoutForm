@@ -15,7 +15,7 @@
 
 (function() {
   // Create angular app
-  var app = angular.module('checkoutApp', ['angularPayments']);
+  var app = angular.module('checkoutApp', []);
 
   // Create controller
   app.controller("CheckoutController", function(){
@@ -39,6 +39,6 @@
   }];
 })();
 
-angular.module('checkoutApp').config(function($window) {
-    $window.Stripe.setPublishableKey('pk_test_jzHurXHqR8OD25e2kfHvpETD');
-});
+// angular.module('checkoutApp').config(function($window) {
+//     $window.Stripe.setPublishableKey('pk_test_jzHurXHqR8OD25e2kfHvpETD');
+// });
