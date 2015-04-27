@@ -121,8 +121,14 @@ gulp.task(TASKS.fonts, function () {
 
 // Copy all files at the root level (app)
 gulp.task('copy', function () {
-  // return gulp.src([BASEPATHS.app + '*'], {dot: true})
-  //   .pipe(gulp.dest(BASEPATHS.dist));
+  return gulp.src([
+    'app/**/*',
+    '!app/assets/**/*',
+    '!app/views/**/*',
+    'node_modules/apache-server-configs/dist/.htaccess'
+  ], {
+    dot: true
+  }).pipe(gulp.dest(BASEPATHS.dist));
 });
 
 // Watch files for changes & reload
