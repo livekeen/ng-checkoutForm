@@ -1,10 +1,16 @@
 extends ../layouts/layout.jade
 
 block head
+  //- Stripe
+  script(src="https://js.stripe.com/v2/")
+
   //- Angular
   script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0-rc.1/angular.min.js")
 
+  //- Angular Payments
+  script(src="bower_components/angular-payments/lib/angular-payments.js")
 
+  script(src="app.js")
 
 block body
   section.content(ng-controller="CheckoutController as checkoutCtrl")
@@ -57,5 +63,3 @@ block body
   aside
     h3 Checkout summary
     p Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore temporibus iusto modi, excepturi error! Repellat hic nemo labore, voluptates saepe placeat ut esse ipsa recusandae, harum aliquid modi iusto accusantium.
-
-  script(src="app.js")
