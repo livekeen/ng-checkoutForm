@@ -8,7 +8,7 @@ block head
   script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0-rc.1/angular.min.js")
 
   //- Angular Payments
-  script(src="bower_components/angular-payments/lib/angular-payments.js")
+  //- script(src="bower_components/angular-payments/lib/angular-payments.js")
 
   script(src="app.js")
 
@@ -50,16 +50,16 @@ block body
 
       .field
         label(for="billing-number") Credit Card
-        input#billing-number(ng-model="number" type="number" payment-format="card" payments-validate="card" required)
+        input#billing-number(type="number" required)
       .field
         label(for="billing-name") Name on Card
         input#billing-name(type="text" required)
       .field
         label(for="billing-expiry") Expiration Date
-        input#billing-expiry(ng-model="expiry" type="number" payment-format="expiry" payments-validate="expiry" required)
+        input#billing-expiry(type="number" required)
       .field
         label(for="billing-cvc") CVC
-        input#billing-cvc(ng-model="cvc" type="number" payment-format="cvc" payments-validate="cvc" required)
+        input#billing-cvc(type="number" required)
 
       .field
       input(type="submit" value="Checkout")
