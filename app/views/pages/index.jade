@@ -15,46 +15,51 @@ block head
 block body
   section.content(ng-controller="CheckoutController as checkoutCtrl")
     h1 Checkout
-    form(name="checkoutForm"  ng-submit!="checkoutForm.$valid && checkoutCtrl.submitCheckout(product)" novalidate)
+    form(name="checkoutForm" ng-submit!="checkoutForm.$valid && checkoutCtrl.submitCheckout(product)" novalidate stripe-form="stripeCallback")
       .field
         label(for="email") Email Address
         input#email(ng-model="user.email" required type="email" name="email")
         small.error Enter a valid email.
 
         p checkoutForm is {{checkoutForm.$valid}}
-      header
-        h3 Shipping Information
-        p Where should we ship this?
-      .field
-        label(for="") Name
-        input(type="text")
-      .field
-        label(for="") Address
-        input(type="text" required)
-      .field
-        label(for="") Postal Code
-        input(type="text")
-      .field
-        label(for="") City
-        input(type="text")
-      .field
-        label(for="") State
-        input(type="text")
-      .field
-        label(for="") Country
-        select#country(name="")
-          option(value="Canada") Canada
+      //- header
+      //-   h3 Shipping Information
+      //-   p Where should we ship this?
+      //- .field
+      //-   label(for="") Name
+      //-   input(type="text")
+      //- .field
+      //-   label(for="") Address
+      //-   input(type="text" required)
+      //- .field
+      //-   label(for="") Postal Code
+      //-   input(type="text")
+      //- .field
+      //-   label(for="") City
+      //-   input(type="text")
+      //- .field
+      //-   label(for="") State
+      //-   input(type="text")
+      //- .field
+      //-   label(for="") Country
+      //-   select#country(name="")
+      //-     option(value="Canada") Canada
 
       header
         h3 Billing Information
+
       .field
-        label(for="") Credit Card
-        input(type="text" required)
+        label(for="billing-number") Credit Card
+        input#billing-number(ng-model="number" type="number" payment-format="card" payments-validate="card" required)
       .field
-        label(for="") Name on Card
-        input(type="text")
+        label(for="billing-name") Name on Card
+        input#billing-name(type="text" required)
       .field
-        label(for="") Expiry Date
+        label(for="billing-expiry") Expiration Date
+        input#billing-expiry(ng-model="expiry" type="number" payment-format="expiry" payments-validate="expiry" required)
+      .field
+        label(for="billing-cvc") CVC
+        input#billing-cvc(ng-model="cvc" type="number" payment-format="cvc" payments-validate="cvc" required)
 
       .field
       input(type="submit" value="Checkout")
